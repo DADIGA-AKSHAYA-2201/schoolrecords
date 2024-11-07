@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty List</title>
+    <style>
+        /* Container styles */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card styles */
+        .faculty-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .faculty-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .faculty-card h2 {
+            margin-top: 0;
+        }
+        .faculty-card p {
+            margin: 5px 0;
+        }
+
+        /* Button styles */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button.add {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .button.add:hover {
+            background-color: #218838;
+        }
+        .button.update {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .button.update:hover {
+            background-color: #0056b3;
+        }
+        .button.delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .button.delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Page title styles */
+        h1 {
+            text-align: center;
+        }
+
+        /* Add faculty button styles */
+        .add-faculty-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Faculty List</h1>
+    <a href="{% url 'add_faculty' %}" class="button add add-faculty-button">Add Faculty</a>
+    <div class="container">
+        {% for faculty in faculties %}
+        <div class="faculty-card">
+            <h2>{{ faculty.first_name }} {{ faculty.last_name }}</h2>
+            <p><strong>Faculty ID:</strong> {{ faculty.id }}</p>
+            <p><strong>Department:</strong> {{ faculty.department }}</p>
+            <div class="action-buttons">
+                <a href="{% url 'update_faculty' faculty.id %}" class="button update">Update</a>
+                <form action="{% url 'delete_faculty' faculty.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to delete {{ faculty.first_name }} {{ faculty.last_name }}?')">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
