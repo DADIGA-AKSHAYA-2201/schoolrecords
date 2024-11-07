@@ -1,0 +1,115 @@
+<!-- student_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    <style>
+        /* Container styles */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card styles */
+        .student-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .student-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .student-card h2 {
+            margin-top: 0;
+        }
+        .student-card p {
+            margin: 5px 0;
+        }
+
+        /* Button styles */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button.add {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .button.add:hover {
+            background-color: #218838;
+        }
+        .button.update {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .button.update:hover {
+            background-color: #0056b3;
+        }
+        .button.delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .button.delete:hover {
+            background-color: #c82333;
+        }
+        .button.view-grades {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .button.view-grades:hover {
+            background-color: #e0a800;
+        }
+
+        /* Page title styles */
+        h1 {
+            text-align: center;
+        }
+
+        /* Add student button styles */
+        .add-student-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student List</h1>
+    <a href="{% url 'add_student' %}" class="button add add-student-button">Add Student</a>
+    <div class="container">
+        {% for student in students %}
+        <div class="student-card">
+            <h2>{{ student.first_name }} {{ student.last_name }}</h2>
+            <p><strong>Student ID:</strong> {{ student.id }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+            <p><strong>Address:</strong> {{ student.address }}</p>
+            <p><strong>Parent Contact Info:</strong> {{ student.parent_contact_info }}</p>
+            <div class="action-buttons">
+                <a href="{% url 'update_student' student.id %}" class="button update">Update</a>
+                <form action="{% url 'delete_student' student.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to delete {{ student.first_name }} {{ student.last_name }}?')">Delete</button>
+                </form>
+                <a href="{% url 'view_grades' student.id %}" class="button view-grades">View Grades</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
