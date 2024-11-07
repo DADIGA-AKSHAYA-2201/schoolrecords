@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Grade</title>
+    <style>
+        /* Form container styles */
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        /* Form field styles */
+        .form-field {
+            margin-bottom: 10px;
+        }
+
+        /* Input styles */
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Button styles */
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button.submit {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .button.submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Grade</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="form-field">
+                <label for="student">Student:</label>
+                {{ form.student }}
+            </div>
+            <div class="form-field">
+                <label for="course">Course:</label>
+                {{ form.course }}
+            </div>
+            <div class="form-field">
+                <label for="teacher">Teacher:</label>
+                {{ form.teacher }}
+            </div>
+            <div class="form-field">
+                <label for="grade">Grade:</label>
+                {{ form.grade }}
+            </div>
+            <button type="submit" class="button submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

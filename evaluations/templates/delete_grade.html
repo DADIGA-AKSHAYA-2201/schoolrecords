@@ -1,0 +1,49 @@
+<!-- delete_grade.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Grade</title>
+    <style>
+        /* Container styles */
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Confirmation message styles */
+        .message {
+            margin-bottom: 20px;
+        }
+
+        /* Button styles */
+        .button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Grade</h1>
+        <p class="message">Are you sure you want to delete the grade for {{ grade.course }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">Delete</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -70,3 +70,41 @@ def delete_faculty(request, pk):
         faculty.delete()
         return redirect('faculty_list')
     return render(request, 'delete_faculty.html', {'faculty': faculty})
+
+def add_grade(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('student_list')  # Redirect to student list page after successful submission
+    else:
+        form = GradeForm()
+    return render(request, 'add_grade.html', {'form': form})
+
+
+def view_grades(request, student_id):
+    grades = Grade.objects.filter(student_id=student_id)
+    student_name = grades.first().student.first_name + ' ' + grades.first().student.last_name  # Get student name
+    context = {
+        'student_name': student_name,
+        'grades': grades
+    }
+    return render(request, 'view_grades.html', context)
+
+def update_grade(request, grade_id):
+    grade = get_object_or_404(Grade, id=grade_id)
+    if request.method == 'POST':
+        form = GradeForm(request.POST, instance=grade)
+        if form.is_valid():
+            form.save()
+            return redirect('view_grades', student_id=grade.student.id)
+    else:
+        form = GradeForm(instance=grade)
+    return render(request, 'update_grade.html', {'form': form})
+
+def delete_grade(request, grade_id):
+    grade = get_object_or_404(Grade, id=grade_id)
+    if request.method == 'POST':
+        grade.delete()
+        return redirect('view_grades', student_id=grade.student.id)
+    return render(request, 'delete_grade.html', {'grade': grade})
