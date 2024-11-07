@@ -1,23 +1,18 @@
-"""
-URL configuration for schoolrecords project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('grades/', include('grades.urls')),
+    path('students/', views.getStudents, name='student_list'),
+    path('add-student/', views.addStudent, name='add_student'),
+    path('delete-student/<str:student_id>/', views.delete_student, name='delete_student'),
+    path('update-student/<str:student_id>/', views.update_student, name='update_student'),
+    path('faculties/', views.faculty_list, name='faculty_list'),
+    path('faculties/add/', views.add_faculty, name='add_faculty'),
+    path('faculties/update/<str:pk>/', views.update_faculty, name='update_faculty'),
+    path('faculties/delete/<str:pk>/', views.delete_faculty, name='delete_faculty'),
+    path('add_grade/', views.add_grade, name='add_grade'),
+    path('view_grades/<str:student_id>/', views.view_grades, name='view_grades'),
+    path('update_grade/<int:grade_id>/', views.update_grade, name='update_grade'),
+    path('delete_grade/<int:grade_id>/', views.delete_grade, name='delete_grade'),
+
 ]

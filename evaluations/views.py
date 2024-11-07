@@ -37,6 +37,7 @@ def update_student(request, student_id):
     else:
         form = StudentForm(instance=student)
     return render(request, 'update_student.html', {'form': form, 'student': student})
+
 def faculty_list(request):
     all_faculties = Faculty.objects.all()
     context = {'faculties': all_faculties}
